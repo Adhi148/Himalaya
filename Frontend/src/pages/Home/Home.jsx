@@ -29,7 +29,7 @@ const Home = () => {
   useEffect(() => {
     if (selectedTable) {
       setLoading(true); // Show loader
-      fetch(`http://localhost:4000/records/${selectedTable}`)
+      fetch(`http://54.172.168.74:4000/records/${selectedTable}`)
         .then((response) => response.json())
         .then((data) => {
           setAllData(data.data);
