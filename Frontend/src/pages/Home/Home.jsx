@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "./Home.css"; // Ensure you include the CSS file
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import CONFIG from '../../../config.js'; // Ensure this path is correct
 
 const Home = () => {
   const navigate = useNavigate();
@@ -29,7 +30,7 @@ const Home = () => {
   useEffect(() => {
     if (selectedTable) {
       setLoading(true); // Show loader
-      fetch(`http://54.172.168.74:4000/records/${selectedTable}`)
+      fetch(`${CONFIG.backendUrl}/records/${selectedTable}`)
         .then((response) => response.json())
         .then((data) => {
           setAllData(data.data);
