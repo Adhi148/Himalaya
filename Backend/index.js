@@ -2,6 +2,7 @@ const express = require('express');
 const AWS = require('aws-sdk');
 const csv = require('csv-parser');
 const cors = require('cors');
+const os = require('os');
 
 const app = express();
 const port = 4000;
@@ -42,6 +43,25 @@ app.get('/records/:filename', (req, res) => {
     });
 });
 
+const getLocalIPAddress = () => {
+  const networkInterfaces = os.networkInterfaces();
+  let ipAddress = '';
+
+  for (const iface in networkInterfaces) {
+    const addresses = networkInterfaces[iface];
+    for (const address of addresses) {
+      if (address.family === 'IPv4' && !address.internal) {
+        ipAddress = address.address;
+        break;
+      }
+    }
+    if (ipAddress) break;
+  }
+
+  return ipAddress || 'localhost';
+};
+
 app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
+  const ipAddress = getLocalIPAddress();
+  console.log(`Server running at http://${ipAddress}:${port}`);
 });
